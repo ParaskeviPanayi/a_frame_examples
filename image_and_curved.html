@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+</head>
+<body>
+
+<a-scene>
+    <a-assets>
+        <img id="pink-stone" src="materials/pink.jpg">
+        <img id="stone-NRM" src="materials/stone.jpg">
+        <img id="plakaki" src="materials/plakaki.jpg">
+    </a-assets>
+
+<!-- Iamge Primitive -->
+<a-image src="#stone-NRM"
+            position="0 1.5 -3"
+            width="1"
+            height="0.75"
+            scale="3 3 1">
+</a-image>
+          
+<!-- Curved image -->
+<a-curvedimage  src="#pink-stone"
+                theta-length="90"
+                theta-start="135"
+                radius="0.3"
+                position="0 1.5 0"
+                scale="3 3 3"
+>
+</a-curvedimage>
+
+<!-- Curved image -->
+<a-curvedimage  src="#pink-stone"
+                theta-length="50"
+                theta-start="155"
+                radius="0.3"
+                position="0 1.5 0"
+                scale="3 3 3"
+>
+</a-curvedimage>
+
+
+<a-box color="#AA0000"
+       opacity="0.5"
+>
+
+</a-box>
+
+
+</body>
+</html>

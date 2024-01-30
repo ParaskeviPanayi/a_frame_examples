@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <title>floor</title>
+    <style>
+        #zoom-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .zoom-button {
+            cursor: pointer;
+            padding: 8px 12px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            display: block;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="zoom-controls">
+        <div class="zoom-button" onclick="zoomIn()">Zoom In (+)</div>
+        <div class="zoom-button" onclick="zoomOut()">Zoom Out (-)</div>
+        <div class="zoom-button" onclick="resetZoom()">Reset Zoom (0)</div>
+    </div>
+
+    <a-scene id="zoomed-content">
+        <a-assets>
+            <img id="forest" src="materials/forest.jpg">
+        </a-assets>
+
+        <a-camera>
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1"
+                >
+            </a-entity>
+        </a-camera>
+
+        <a-sky src="#forest"></a-sky>
+    </a-scene>
+
+
+
+
+    <script>
+        let scale = 1;
+    
+        // Zoom in
+        function zoomIn() {
+            scale += 0.1;
+            document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
+        }
+    
+        //Zoom out
+        function zoomOut() {
+            if (scale > 0.2) { // Limit minimum zoom level
+                scale -= 0.1;
+                document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
+            }
+        }
+    
+        //reset Zoom
+        function resetZoom() {
+            scale = 1;
+            document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
+        }
+
+
+        //Keyboard shortcuts
+        //Reset zoom
+        document.addEventListener('keydown', (event) => {
+            if (event.altKey && event.key === '0') {
+                resetZoom();
+            }
+        });
+    
+        //Zoom in
+        document.addEventListener('keydown', (event) => {
+            if (event.altKey && event.key === '+') {
+                zoomIn();
+            }
+        });
+    
+        //Zoom out    
+        document.addEventListener('keydown', (event) => {
+            if (event.altKey && event.key === '-') {
+                zoomOut();
+            }
+        });
+    
+    
+    </script>
+</body>
+</html>

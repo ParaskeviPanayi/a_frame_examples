@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <a-scene>
+        <!-- Box 16:9 Panel | Parent Entity -->
+        <a-box color="#ff8a73" width="4" height="2" depth="0.2" position="0 1 -7" rotation="90 0 0" scale="-1 1 2">
+            <!--Circle blue| child entity-->
+            <a-circle color="#73a2ff" side="double" position="2 1 0"  rotation="90 0 0" scale=""></a-circle>
+        </a-box>
+         <!--Circle green | child entity-->
+         <a-circle color="#a2ff73" side="double" position="-2 1 -8" rotation="0 0 0" scale="2 2 1"></a-circle>
+
+        <!-- Cylinder -->
+        <a-cylinder color="#ff73a2" height="2" radius="2" segments-radial="6" open-ended="true" side="double"
+            position="0 1 0" rotation="0 -90 90" scale="2 1 2" ></a-cylinder>
+    </a-scene>
+
+</body>
+
+</html>

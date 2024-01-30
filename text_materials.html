@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <title>Materials</title>
+</head>
+
+<body>
+
+    
+    <a-scene>
+        <a-assets>
+            <img id="pink-stone" src="materials/pink.jpg">
+            <img id="stone-NRM" src="materials/stone.jpg">
+            <img id="plakaki" src="materials/plakaki.jpg">
+        </a-assets>
+
+        <!-- Light blue box -->
+        <a-box color="#FFFFFFF" src="materials/stone.jpg" repeat="1 1" normal-map="#stone-NRM"
+            normal-texture-repeat="1 1" normal-scale="1 -1" roughness="0.5" width="4" height="4" depth="4"
+            position="-2 1.5 -9" scale="-1 1 1">
+        </a-box>
+
+        <!-- Brown box -->
+        <a-box material="color:#FFFFFFF; 
+                        src:#pink-stone; 
+                        repeat:2 2;
+                        normal-map: #pink-stone;
+                        normal-texture-repeat:2 2;
+                        normal-scale: 1 -1;
+                        roughness:0.9;" 
+                width="4" height="4" depth="4" position="2 1.5 -9" scale="-1 -1 -1">
+        </a-box>
+    </a-scene>
+
+
+</body>
+
+</html>

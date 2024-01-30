@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <title>Materials</title>
+</head>
+
+<body>
+
+
+    <a-scene>
+        <a-assets>
+            <img id="pink-stone" src="materials/pink.jpg">
+            <img id="stone-NRM" src="materials/stone.jpg">
+            <img id="plakaki" src="materials/plakaki.jpg">
+        </a-assets>
+
+        <!-- Iamge Primitive -->
+        <a-image src="#stone-NRM" geometry="" position="0 1.6 -11" width="1" scale="12 9 1">
+        </a-image>
+
+        <a-box position="-1 0.5 -4"></a-box>
+        <!--Entity box-->
+        <a-entity geometry="primitive:box" position="1 0.5 -4" material="shader:standard; color:#FFFFFF;
+        src:#pink-stone;"></a-entity>
+        
+    </a-scene>
+
+
+</body>
+
+</html>

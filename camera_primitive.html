@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <title>Camera</title>
+</head>
+
+<body>
+    <a-scene>
+        <!-- Assets -->
+        <a-assets>
+            <img id="pink-stone" src="materials/pink.jpg">
+            <img id="stone-NRM" src="materials/stone.jpg">
+            <img id="plakaki" src="materials/plakaki.jpg">
+            <img id="wood" src="materials/wood.jpg">
+            <img id="blue_pattern" src="materials/patern-blue.jpg">
+            <img id="touvla_blue" src="materials/touvla_blue.jpg">
+            <img id="sky_360" src="materials/sky.jpg">
+            <img id="forest" src="materials/forest.jpg">
+            <img id="family" src="materials/family.jpg">
+
+        </a-assets>
+
+        <!--Ground-->
+        <a-plane material="color:#FFFFFF; src:#touvla_blue;" rotation="-90 0 0" scale="5 5 1"></a-plane>
+
+        <!-- Cylinder -->
+        <!-- Box -->
+        <a-box color="#AA0000" width="2" height="2" depth="2" position="0 4 0">
+            <a-animation attribute="rotation" to="0 360 0" 
+            repeat="indefinite" dur="5000" easing="linear"></a-animation>
+        </a-box>
+
+        <!-- Box -->
+        <a-box color="#00AA00" height="2" depth="4" position="2 1 0">
+        </a-box>
+
+        <a-image src="#family" scale="2 2 1" position="0 1 0"></a-image>
+
+        <!-- Camera -->
+        <a-entity position="0 0 5">
+            <a-camera user-height="1.7"></a-camera>
+        </a-entity>
+
+    </a-scene>
+</body>
+
+</html>
