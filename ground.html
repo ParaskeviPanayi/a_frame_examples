@@ -22,8 +22,8 @@
             z-index: 1000;
         }
 
-        #magnifying_glass{
-            
+        #magnifying_glass {
+            /* display: none; */
         }
 
         .zoom-button,
@@ -54,26 +54,60 @@
     </div>
 
     <a-scene id="zoomed-content">
+
         <a-assets>
             <img id="forest" src="materials/forest.jpg">
             <img id="magnifying_glass" src="materials/189254.svg">
         </a-assets>
 
-        <a-camera>
-            <div id="magnifying_glass">
+        <a-sky src="#forest" id="forest_pic"></a-sky>
+
+        <a-entity id="magnifying_glass" visible="true">
             <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1">
-                <a-image src="#magnifying_glass" width="0.5" height="0.5"
-                    geometry="primitive: plane" material="side: double;"></a-image>
+                <a-image src="#magnifying_glass" width="1" height="1" geometry="primitive: plane"
+                    material="side: double;"></a-image>
             </a-entity>
-            </div>
+        </a-entity>
+
+        <a-camera position="0 0 0">
+            <a-entity cursor="fuse: false;"></a-entity>
         </a-camera>
 
-        <a-sky src="#forest"></a-sky>
+        <!-- <a-plane color="transparent" position="0 0 -2" width="2" height="2" cursor-listener></a-plane> -->
+
+
+        <!-- <a-camera id="camera">
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1">
+                <a-image src="#magnifying_glass" width="0.5" height="0.5" geometry="primitive: plane"
+                    material="side: double;"></a-image>
+            </a-entity>
+        </a-camera> -->
+
+
     </a-scene>
 
     <script>
-        function show_magnifying_glass() { 
-            document.getElementById('zoom-controls').style.display="block";
+
+        AFRAME.registerComponent('cursor-listener', {
+            init: function () {
+                var magnifyingGlass = document.getElementById('magnifying_glass');
+                var sky = document.getElementById('forest_pic');
+
+                this.el.addEventListener('mouseenter', function () {
+                    magnifyingGlass.setAttribute('visible', 'true');
+                    magnifyingGlass.setAttribute('position', event.detail.intersection.point);
+                });
+
+                this.el.addEventListener('mouseleave', function () {
+                    magnifyingGlass.setAttribute('visible', 'false');
+                });
+            }
+        });
+
+
+        function show_magnifying_glass() {
+            document.getElementById('zoom-controls').style.display = "block";
+            document.getElementById('camera').style.display = "block";
         }
 
         let scale = 1;
