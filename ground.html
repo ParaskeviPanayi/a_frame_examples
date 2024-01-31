@@ -5,16 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <title>floor</title>
+    <title>Explore Forest Park</title>
     <style>
-        #zoom-controls {
+        #menu-controls {
             position: absolute;
             top: 20px;
             left: 20px;
             z-index: 1000;
         }
 
-        .zoom-button {
+        #zoom-controls {
+            position: absolute;
+            display: none;
+            top: 60px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        #magnifying_glass{
+            
+        }
+
+        .zoom-button,
+        .btn_mg_glass {
             cursor: pointer;
             padding: 8px 12px;
             background-color: #ffffff;
@@ -29,7 +42,12 @@
 
 <body>
 
+    <div id="menu-controls">
+        <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button>
+    </div>
+
     <div id="zoom-controls">
+        <!-- <button class="btn_mg_glass"  onclick="show_magnifying_glass()">test</button> -->
         <div class="zoom-button" onclick="zoomIn()">Zoom In (+)</div>
         <div class="zoom-button" onclick="zoomOut()">Zoom Out (-)</div>
         <div class="zoom-button" onclick="resetZoom()">Reset Zoom (0)</div>
@@ -38,29 +56,33 @@
     <a-scene id="zoomed-content">
         <a-assets>
             <img id="forest" src="materials/forest.jpg">
+            <img id="magnifying_glass" src="materials/189254.svg">
         </a-assets>
 
         <a-camera>
-            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1"
-                >
+            <div id="magnifying_glass">
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1">
+                <a-image src="#magnifying_glass" width="0.5" height="0.5"
+                    geometry="primitive: plane" material="side: double;"></a-image>
             </a-entity>
+            </div>
         </a-camera>
 
         <a-sky src="#forest"></a-sky>
     </a-scene>
 
-
-
-
     <script>
+        function show_magnifying_glass() { 
+            document.getElementById('zoom-controls').style.display="block";
+        }
+
         let scale = 1;
-    
         // Zoom in
         function zoomIn() {
             scale += 0.1;
             document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
         }
-    
+
         //Zoom out
         function zoomOut() {
             if (scale > 0.2) { // Limit minimum zoom level
@@ -68,37 +90,37 @@
                 document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
             }
         }
-    
+
         //reset Zoom
         function resetZoom() {
             scale = 1;
             document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
         }
 
-
         //Keyboard shortcuts
-        //Reset zoom
+        //Reset zoom : alt and 0
         document.addEventListener('keydown', (event) => {
             if (event.altKey && event.key === '0') {
                 resetZoom();
             }
         });
-    
-        //Zoom in
+
+        //Zoom in : alt and +
         document.addEventListener('keydown', (event) => {
             if (event.altKey && event.key === '+') {
                 zoomIn();
             }
         });
-    
-        //Zoom out    
+
+        //Zoom out : alt and -   
         document.addEventListener('keydown', (event) => {
             if (event.altKey && event.key === '-') {
                 zoomOut();
             }
         });
-    
-    
+
+
     </script>
 </body>
+
 </html>
