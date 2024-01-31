@@ -44,6 +44,7 @@
 
     <div id="menu-controls">
         <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button>
+        <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button>
     </div>
 
     <div id="zoom-controls">
@@ -51,49 +52,56 @@
         <div class="zoom-button" onclick="zoomIn()">Zoom In (+)</div>
         <div class="zoom-button" onclick="zoomOut()">Zoom Out (-)</div>
         <div class="zoom-button" onclick="resetZoom()">Reset Zoom (0)</div>
+        <div class="zoom-button" onclick="hide_magnifying_glass()">hide</div>
     </div>
 
     <a-scene id="zoomed-content">
-
         <a-assets>
             <img id="forest" src="materials/forest.jpg">
             <img id="magnifying_glass" src="materials/189254.svg">
         </a-assets>
 
         <a-sky src="#forest" id="forest_pic"></a-sky>
-    
+
         <a-camera id="camera">
-            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1">
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" visible="false" id="cursor_tool">
                 <a-image src="#magnifying_glass" width="0.5" height="0.5" geometry="primitive: plane"
                     material="side: double;"></a-image>
             </a-entity>
         </a-camera>
-
-
     </a-scene>
 
     <script>
 
-        AFRAME.registerComponent('cursor-listener', {
-            init: function () {
-                var magnifyingGlass = document.getElementById('magnifying_glass');
-                var sky = document.getElementById('forest_pic');
+        // AFRAME.registerComponent('cursor-listener', {
+        //     init: function () {
+        //         var magnifyingGlass = document.getElementById('magnifying_glass');
+        //         var sky = document.getElementById('forest_pic');
 
-                this.el.addEventListener('mouseenter', function () {
-                    magnifyingGlass.setAttribute('visible', 'true');
-                    magnifyingGlass.setAttribute('position', event.detail.intersection.point);
-                });
+        //         this.el.addEventListener('mouseenter', function () {
+        //             magnifyingGlass.setAttribute('visible', 'true');
+        //             magnifyingGlass.setAttribute('position', event.detail.intersection.point);
+        //         });
 
-                this.el.addEventListener('mouseleave', function () {
-                    magnifyingGlass.setAttribute('visible', 'false');
-                });
-            }
-        });
+        //         this.el.addEventListener('mouseleave', function () {
+        //             magnifyingGlass.setAttribute('visible', 'false');
+        //         });
+        //     }
+        // });
 
-
+        //Show magnifying glass and options
         function show_magnifying_glass() {
             document.getElementById('zoom-controls').style.display = "block";
-            document.getElementById('camera').style.display = "block";
+            var magnifyingGlass = document.getElementById('cursor_tool');
+            magnifyingGlass.setAttribute('visible', 'true');
+
+        }
+
+        //Hide magnifying glass and options
+        function hide_magnifying_glass() {
+            document.getElementById('zoom-controls').style.display = "none";
+            var magnifyingGlass = document.getElementById('cursor_tool');
+            magnifyingGlass.setAttribute('visible', 'false');
         }
 
         let scale = 1;
