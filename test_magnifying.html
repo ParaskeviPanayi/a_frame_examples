@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Magnifying Effect with Zoomed View in A-Frame</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene cursor="rayOrigin: mouse">
+      <!-- Camera and cursor setup -->
+      <a-entity camera look-controls></a-entity>
+
+      <!-- Define objects in the scene -->
+      <a-sphere position="0 1.5 -5" radius="1" color="red"></a-sphere>
+      <a-box position="-2 1 -5" depth="1" width="1" height="1" color="blue"></a-box>
+      <a-cylinder position="2 1 -5" radius="0.5" height="1" color="green"></a-cylinder>
+
+      <!-- Magnifying glass entity -->
+      <a-entity id="magnifying-glass" visible="false">
+        <!-- Outer ring for the magnifying glass -->
+        <a-entity geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: white"></a-entity>
+        <!-- Inner ring to create the transparent circle -->
+        <a-entity geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02" material="color: black; opacity: 0.7"></a-entity>
+        <!-- Zoomed-in view -->
+        <a-entity id="zoomed-view" geometry="primitive: plane; width: 0.2; height: 0.2" material="src: #zoomed-image; transparent: true; opacity: 0.9"></a-entity>
+      </a-entity>
+
+      <!-- Event listeners to toggle magnifying glass visibility and position -->
+      <a-entity raycaster="objects: a-sphere, a-box, a-cylinder" cursor-listener></a-entity>
+    </a-scene>
+
+    <!-- Image used for zoomed view -->
+    <img id="zoomed-image" src="zoomed_image.jpg" style="display: none;">
+    
+    <script>
+      AFRAME.registerComponent('cursor-listener', {
+        init: function () {
+          var magnifyingGlass = document.getElementById('magnifying-glass');
+          var zoomedView = document.getElementById('zoomed-view');
+
+          this.el.addEventListener('mouseenter', function () {
+            magnifyingGlass.setAttribute('visible', true);
+          });
+
+          this.el.addEventListener('mouseleave', function () {
+            magnifyingGlass.setAttribute('visible', false);
+          });
+
+          this.el.addEventListener('raycaster-intersection', function (event) {
+            var intersection = event.detail.intersections[0];
+            if (intersection) {
+              magnifyingGlass.setAttribute('position', intersection.point);
+              zoomedView.setAttribute('position', {x: intersection.point.x, y: intersection.point.y + 0.1, z: intersection.point.z});
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

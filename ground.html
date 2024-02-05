@@ -22,9 +22,6 @@
             z-index: 1000;
         }
 
-        #magnifying_glass {
-            /* display: none; */
-        }
 
         .zoom-button,
         .btn_mg_glass {
@@ -42,6 +39,8 @@
 
 <body>
 
+    
+ 
 
 
     <a-scene id="zoomed-content">
@@ -50,50 +49,30 @@
             <img id="magnifying_glass" src="materials/189254.svg">
         </a-assets>
 
-        <a-sky src="#forest" id="forest_pic" rotation="0 0 0"></a-sky>
-
-        <a-entity>
-            <div id="menu-controls">
-                <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button>
-                <!-- <button class="btn_mg_glass" onclick="show_magnifying_glass()">Hammer</button>
-                <button class="btn_mg_glass" onclick="show_magnifying_glass()">Compass</button>
-                <button class="btn_mg_glass" onclick="show_magnifying_glass()">measuring tape</button> -->
-            </div>
-
-            <div id="zoom-controls">
-                <!-- <button class="btn_mg_glass"  onclick="show_magnifying_glass()">test</button> -->
-                <div class="zoom-button" onclick="zoomIn()">Zoom In (+)</div>
-                <div class="zoom-button" onclick="zoomOut()">Zoom Out (-)</div>
-                <div class="zoom-button" onclick="resetZoom()">Reset Zoom (0)</div>
-                <div class="zoom-button" onclick="hide_magnifying_glass()">hide</div>
-            </div>
+        <a-entity  id="forest_pic">
+            <a-sky src="#forest" rotation="0 0 0"></a-sky>
         </a-entity>
 
+ 
 
 
         <a-camera id="camera">
-            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" visible="false" id="cursor_tool">
-                <a-image src="#magnifying_glass" width="0.5" height="0.5" geometry="primitive: plane"
-                    material="side: double;"></a-image>
-            </a-entity>
-
 
             <a-entity>
                 <div id="menu-controls">
-                    <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button>
+                    <!-- <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button> -->
                     <!-- <button class="btn_mg_glass" onclick="show_magnifying_glass()">Hammer</button>
                     <button class="btn_mg_glass" onclick="show_magnifying_glass()">Compass</button>
                     <button class="btn_mg_glass" onclick="show_magnifying_glass()">measuring tape</button> -->
                 </div>
 
-                <div id="zoom-controls">
-                    <!-- <button class="btn_mg_glass"  onclick="show_magnifying_glass()">test</button> -->
-                    <div class="zoom-button" onclick="zoomIn()">Zoom In (+)</div>
-                    <div class="zoom-button" onclick="zoomOut()">Zoom Out (-)</div>
-                    <div class="zoom-button" onclick="resetZoom()">Reset Zoom (0)</div>
-                    <div class="zoom-button" onclick="hide_magnifying_glass()">hide</div>
-                </div>
             </a-entity>
+
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false">
+                <a-image src="#magnifying_glass" width="1" height="1" geometry="primitive: plane"
+                    material="side: double;"></a-image>
+            </a-entity>
+
 
             <a-entity id="menu" position="0 0 -1">
 
@@ -104,29 +83,30 @@
                     <a-text value="Magnifying Glass" color="black" align="center" width="1"></a-text>
                 </a-plane>
 
-                <a-plane id="zoomin_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.59 0"
-                    clickable>
-                    <a-text value="Zoom In (+)" color="black" align="center" width="1"></a-text>
-                </a-plane>
+                <a-entity id="zoom_controls" visible="false">
+                    <a-plane id="zoomin_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.59 0"
+                        clickable>
+                        <a-text value="Zoom In (+)" color="black" align="center" width="1"></a-text>
+                    </a-plane>
 
 
-                <a-plane id="zoomout_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0"
-                    clickable>
-                    <a-text value="Zoom Out (-)" color="black" align="center" width="1"></a-text>
-                </a-plane>
+                    <a-plane id="zoomout_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0"
+                        clickable>
+                        <a-text value="Zoom Out (-)" color="black" align="center" width="1"></a-text>
+                    </a-plane>
 
-                
-                <a-plane id="reset_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.37 0"
-                    clickable>
-                    <a-text value="Reset Zoom (0)" color="black" align="center" width="1"></a-text>
-                </a-plane>
 
-                     
-                <a-plane id="hide_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.26 0"
-                    clickable>
-                    <a-text value="hide" color="black" align="center" width="1"></a-text>
-                </a-plane>
+                    <a-plane id="reset_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.37 0"
+                        clickable>
+                        <a-text value="Reset Zoom (0)" color="black" align="center" width="1"></a-text>
+                    </a-plane>
 
+
+                    <a-plane id="hide_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.26 0"
+                        clickable>
+                        <a-text value="hide" color="black" align="center" width="1"></a-text>
+                    </a-plane>
+                </a-entity>
 
                 <!-- End of Magnifying Glass Elements -->
 
@@ -136,36 +116,63 @@
                     <a-text value="Hammer" color="black" align="center" width="1"></a-text>
                 </a-plane>
 
-
-
-
-                <!--Zoom out -->
-
-                <!-- Reset Zomm -->
                 <a-box color="green" width="2" height="0.2" depth="0.1" position="0 -1 0" clickable></a-box>
 
             </a-entity>
 
+            <!-- Magnifying glass entity -->
+            <!-- <a-entity id="magnifying-glass" visible="false">
+                <a-entity geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                    material="color: white"></a-entity>
+                <a-entity geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.035"
+                    material="color: black"></a-entity>
+            </a-entity> -->
 
         </a-camera>
 
         <a-entity cursor="rayOrigin: mouse"></a-entity>
 
+        <a-entity>
+            <div id="menu-controls">
+                <button class="btn_mg_glass" onclick="show_magnifying_glass()">Magnifying Glass</button>
+                <!-- <button class="btn_mg_glass" onclick="show_magnifying_glass()">Hammer</button>
+            <button class="btn_mg_glass" onclick="show_magnifying_glass()">Compass</button>
+            <button class="btn_mg_glass" onclick="show_magnifying_glass()">measuring tape</button> -->
+            </div>
+    
+            <div id="zoom-controls">
+                <!-- <button class="btn_mg_glass"  onclick="show_magnifying_glass()">test</button> -->
+                <div class="zoom-button" onclick="zoomIn()">Zoom In (+)</div>
+                <div class="zoom-button" onclick="zoomOut()">Zoom Out (-)</div>
+                <div class="zoom-button" onclick="resetZoom()">Reset Zoom (0)</div>
+                <div class="zoom-button" onclick="hide_magnifying_glass()">hide</div>
+            </div>
+        </a-entity>
+
     </a-scene>
 
-    <script>
+    <!-- Image used for zoomed view -->
+    <img id="zoomed-image" src="materials/forest.jpg" style="display: none;">
 
+    <script>
         //Show magnifying glass and options
         function show_magnifying_glass() {
-            document.getElementById('zoom-controls').style.display = "block";
+
+            var magn_option = document.getElementById('zoom_controls');
+            magn_option.setAttribute('visible', 'true');
+
             var magnifyingGlass = document.getElementById('cursor_tool');
             magnifyingGlass.setAttribute('visible', 'true');
+
+            magnify("myimage", 3);
 
         }
 
         //Hide magnifying glass and options
         function hide_magnifying_glass() {
-            document.getElementById('zoom-controls').style.display = "none";
+            var magn_option = document.getElementById('zoom_controls');
+            magn_option.setAttribute('visible', 'false');
+
             var magnifyingGlass = document.getElementById('cursor_tool');
             magnifyingGlass.setAttribute('visible', 'false');
         }
@@ -213,8 +220,10 @@
             }
         });
 
+
         AFRAME.registerComponent('clickable', {
             init: function () {
+
                 var button = this.el; // Reference to the box element
                 button.addEventListener('click', function () {
                     console.log('Button Clicked!');
@@ -222,19 +231,23 @@
                     if (button.id === "Mag_glass_button") {
                         show_magnifying_glass();
                     }
-                    else if(button.id==="zoomin_button"){
+                    else if (button.id === "zoomin_button") {
                         zoomIn();
-                    }else if (button.id==="zoomout_button"){
+                    } else if (button.id === "zoomout_button") {
                         zoomOut();
-                    }else if (button.id==="reset_button"){
+                    } else if (button.id === "reset_button") {
                         resetZoom();
-                    }else if (button.id="hide_button"){
+                    } else if (button.id = "hide_button") {
                         hide_magnifying_glass();
                     }
-            
+
                 });
+
             }
         });
+
+
+
 
     </script>
 </body>
