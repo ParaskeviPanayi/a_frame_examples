@@ -38,11 +38,9 @@
 </head>
 
 <body>
-
-
     <a-scene id="zoomed-content">
         <a-assets>
-            <img id="forest" src="materials/forest.jpg">
+            <img id="forest" src="materials/0.jpg">
             <img id="magnifying_glass" src="materials/189254.svg">
             <img id="hammer_pic" src="materials/hammer-silhouette_59491.png">
             <img id="lightbulb_pic" src="materials/idea_11995541.png">
@@ -53,25 +51,27 @@
         </a-entity>
 
         <!-- Entity representing the clickable point -->
-        <a-sphere id="clickablePoint" position="1 1 -3" radius="1" color="#000000" opacity="0.5" visible="false">
+        <a-sphere id="clickablePoint" position="1 1 -2" radius="0.8" color="#000000" opacity="0.5" visible="false">
             <a-animation></a-animation>
         </a-sphere>
 
         <!-- Pop-up entity -->
-        <a-entity id="popup" position="1.2 1.2 -3"
-            text="value: Clicked!; color: black; background-color:white; width: 4;" visible="false"></a-entity>
+        <!-- <a-entity id="popup" position="1.2 1.2 -3"
+            text="value: Clicked!; color: black; background-color:white; width: 4;" visible="false"></a-entity> -->
+        <!-- Create a sphere to represent the magnifying glass -->
+        
+        <!-- <a-entity zoom-in id="magnifying-glass" position="0 1.5 -5" geometry="primitive: sphere; radius: 0.5;"
+            material="color: transparent; opacity: 0.5">
+            <a-camera id="magnifying-camera"></a-camera>
+        </a-entity> -->
+
+        <!-- Create a camera to view the zoomed-in background -->
+
+        <!-- <a-sphere></a-sphere> -->
+
+
 
         <a-camera id="camera">
-
-            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false">
-                <a-image src="#magnifying_glass" width="1" height="1" geometry="primitive: plane"
-                    material="side: double;"></a-image>
-            </a-entity>
-
-            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
-                <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
-                    material="side: double;"></a-image>
-            </a-entity>
 
             <a-entity id="menu" position="0 0 -1">
 
@@ -138,10 +138,21 @@
                         material="side: double;"></a-image>
                 </a-entity>
 
-                <a-plane width="0.5" height="0.5" visible="false" id="info_hammer"> <a-text value="Dolomite"
-                        color="black" align="center" width="1" background=""></a-text></a-plane>
+                <a-plane width="0.5" height="0.5" visible="false" id="info_hammer" position="0 -0.5 0"> <a-text
+                        value="Dolomite" color="black" align="center" width="1" background=""></a-text></a-plane>
 
 
+            </a-entity>
+            <!-- <a-sphere id="magnifying-glass" opacity="0.5" radius="0.5" position="0 0 -1" visible="false"></a-sphere> -->
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false" id="cursor_tool" >
+                <a-image src="#magnifying_glass" width="1" height="1" geometry="primitive: plane"
+                    material="side: double;"></a-image>
+                <!-- <a-circle id="zoom-on-hover" material="color: blue; opacity: 0.5" position="0 0 -1" radius="0.4"></a-circle> -->
+            </a-entity>
+
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
+                <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
+                    material="side: double;"></a-image>
             </a-entity>
 
         </a-camera>
@@ -162,6 +173,45 @@
 
             var magnifyingGlass = document.getElementById('cursor_tool');
             magnifyingGlass.setAttribute('visible', 'true');
+
+            // Access the magnifying glass element
+            var magnifyingGlass = document.getElementById('magnifying-glass');
+            magnifyingGlass.setAttribute('visible', 'true');
+
+            // Access the magnifying camera
+            var magnifyingCamera = document.querySelector('#magnifying-camera');
+
+            // // Set the magnifying camera as a child of the magnifying glass
+            // var magnifyingGlass = document.querySelector('#magnifying-glass');
+            magnifyingGlass.appendChild(magnifyingCamera);
+
+            // Set the magnifying camera's position and rotation
+            magnifyingCamera.object3D.position.set(0, 0, 0); // Inside the magnifying glass
+
+            magnifyingCamera.object3D.rotation.set(0, 0, 0); // Make adjustments as needed
+
+            // Set the zoom factor for the magnifying camera
+            magnifyingCamera.setAttribute('zoom', '2'); // Adjust the zoom level as needed
+
+            // AFRAME.registerComponent('zoom-in'){
+            // // Listen for mousemove event to track mouse position
+            document.addEventListener('mousemove', function (event) {
+                // // Calculate the position of the mouse relative to the window
+                // var mouseX = event.clientX;
+                // var mouseY = event.clientY;
+
+                // // Get the width and height of the window
+                // var windowWidth = window.innerWidth;
+                // var windowHeight = window.innerHeight;
+
+                // // Calculate the position of the mouse relative to the window center
+                // var mouseXCentered = (mouseX - windowWidth / 2) / windowWidth;
+                // var mouseYCentered = (mouseY - windowHeight / 2) / windowHeight;
+
+                // // Set the position of the magnifying glass based on mouse position
+                // magnifyingGlass.setAttribute('position', mouseXCentered * 3 + ' ' + mouseYCentered * 3 + ' -5');
+                // // zoomIn();
+            });
         }
 
         //Hide magnifying glass and options
@@ -215,9 +265,9 @@
             // Add click event listener to the clickable point
             clickablePoint.addEventListener('click', function (evt) {
                 // Get the pop-up entity
-                var popup = document.getElementById('popup');
-                // Show the pop-up
-                popup.setAttribute('visible', true);
+                // var popup = document.getElementById('popup');
+                // // Show the pop-up
+                // popup.setAttribute('visible', true);
 
                 var info_message = document.getElementById('info_hammer');
                 info_message.setAttribute('visible', 'true');
@@ -225,7 +275,7 @@
 
                 //Hide the pop-up after 2 seconds
                 setTimeout(function () {
-                    popup.setAttribute('visible', false);
+                    // popup.setAttribute('visible', false);
                     info_message.setAttribute('visible', false);
 
                 }, 3000);

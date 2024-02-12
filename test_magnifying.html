@@ -1,68 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Magnifying Effect with Custom Image Cursor in A-Frame</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <!-- Camera setup -->
-      <a-entity camera look-controls></a-entity>
 
-      <!-- Define objects in the scene -->
-      <a-sphere position="0 1.5 -5" radius="1" color="red"></a-sphere>
-      <a-box position="-2 1 -5" depth="1" width="1" height="1" color="blue"></a-box>
-      <a-cylinder position="2 1 -5" radius="0.5" height="1" color="green"></a-cylinder>
+<head>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <style>
+    #magnifying-glass {
+      cursor: none;
+    }
+  </style>
+</head>
 
-      <!-- Magnifying glass entity -->
-      <a-entity id="magnifying-glass" visible="false">
-        <!-- Outer ring for the magnifying glass -->
-        <a-entity geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: white"></a-entity>
-        <!-- Inner ring to create the transparent circle -->
-        <a-entity geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02" material="color: black; opacity: 0.7"></a-entity>
-        <!-- Zoomed-in view -->
-        <a-entity id="zoomed-view" geometry="primitive: plane; width: 0.2; height: 0.2" material="src: #zoomed-image; transparent: true; opacity: 0.9"></a-entity>
-      </a-entity>
+<body>
+  <a-scene>
+    <!-- 360-degree image background -->
+    <a-sky id="background-image" src="materials/12.jpg"></a-sky>
 
-      <!-- Image cursor entity -->
-      <a-entity id="image-cursor">
-        <a-image src="cursor.png" width="0.2" height="0.2"></a-image>
-      </a-entity>
 
-      <!-- Event listeners to toggle magnifying glass visibility and position -->
-      <a-entity cursor="rayOrigin: mouse" cursor-listener></a-entity>
-    </a-scene>
+    <!-- Camera for the magnifying glass -->
+    <a-entity id="magnifying-camera" camera="active: false;">
+      <!-- Magnifying glass -->
+      <a-circle id="magnifying-glass" position="0 0 -5" radius="0.9"
+        material="shader: flat; transparent: true; opacity: 0.8;"></a-circle>
+    </a-entity>
+  </a-scene>
 
-    <!-- Image used for zoomed view -->
-    <img id="zoomed-image" src="zoomed_image.jpg" style="display: none;">
-    
-    <script>
-      AFRAME.registerComponent('cursor-listener', {
-        init: function () {
-          var magnifyingGlass = document.getElementById('magnifying-glass');
-          var zoomedView = document.getElementById('zoomed-view');
-          var imageCursor = document.getElementById('image-cursor');
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var background = document.querySelector('#background-image');
+      var magnifyingGlass = document.querySelector('#magnifying-glass');
+      var magnifyingCamera = document.querySelector('#magnifying-camera');
 
-          this.el.addEventListener('mouseenter', function () {
-            magnifyingGlass.setAttribute('visible', true);
-            imageCursor.setAttribute('visible', true);
-          });
+      magnifyingCamera.object3D.position.set(0, 0, 0);
 
-          this.el.addEventListener('mouseleave', function () {
-            magnifyingGlass.setAttribute('visible', false);
-            imageCursor.setAttribute('visible', false);
-          });
+      var renderer = document.querySelector('a-scene').renderer;
 
-          this.el.addEventListener('raycaster-intersection', function (event) {
-            var intersection = event.detail.intersections[0];
-            if (intersection) {
-              magnifyingGlass.setAttribute('position', intersection.point);
-              zoomedView.setAttribute('position', {x: intersection.point.x, y: intersection.point.y + 0.1, z: intersection.point.z});
-              imageCursor.setAttribute('position', {x: intersection.point.x, y: intersection.point.y + 0.1, z: intersection.point.z});
-            }
-          });
-        }
-      });
-    </script>
-  </body>
+      function updateMagnifyingGlass(event) {
+        var mouseX = event.clientX;
+        var mouseY = event.clientY;
+
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        var mouseXScene = (mouseX / windowWidth) * 2 - 1;
+        var mouseYScene = -(mouseY / windowHeight) * 2 + 1;
+
+        magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -5);
+
+        // Render the background image from the perspective of the magnifying camera
+        renderer.render(background.object3D, magnifyingCamera.object3DMap.camera);
+
+        // Update the magnifying glass texture
+        magnifyingGlass.setAttribute('material', 'src', renderer.domElement.toDataURL());
+      }
+
+      document.addEventListener('mousemove', updateMagnifyingGlass);
+    });
+  </script>
+</body>
+
 </html>
