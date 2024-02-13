@@ -17,11 +17,11 @@
 
 
     <!-- Camera for the magnifying glass -->
-    <a-entity id="magnifying-camera" camera="active: false;">
+    <a-camera id="magnifying-camera" camera="active: false;">
       <!-- Magnifying glass -->
-      <a-circle id="magnifying-glass" position="0 0 -5" radius="0.9"
-        material="shader: flat; transparent: true; opacity: 0.8;"></a-circle>
-    </a-entity>
+      <a-circle id="magnifying-glass" position="0 0 -5" radius="1"
+        material="shader: flat; transparent: true; "></a-circle>
+    </a-camera>
   </a-scene>
 
   <script>
@@ -44,7 +44,7 @@
         var mouseXScene = (mouseX / windowWidth) * 2 - 1;
         var mouseYScene = -(mouseY / windowHeight) * 2 + 1;
 
-        magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -5);
+        magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -6);
 
         // Render the background image from the perspective of the magnifying camera
         renderer.render(background.object3D, magnifyingCamera.object3DMap.camera);
