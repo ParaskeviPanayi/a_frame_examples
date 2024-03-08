@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <title>Explore Forest Park</title>
+    <title>Explore Forest</title>
     <style>
         #menu-controls {
             position: absolute;
@@ -46,32 +46,21 @@
             <img id="lightbulb_pic" src="materials/idea_11995541.png">
         </a-assets>
 
+
         <a-entity id="forest_pic">
             <a-sky src="#forest" rotation="0 0 0"></a-sky>
         </a-entity>
 
+        <a-sky id="background-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
+
+
         <!-- Entity representing the clickable point -->
-        <a-sphere id="clickablePoint" position="1 1 -2" radius="0.8" color="#000000" opacity="0.5" visible="false">
+        <a-sphere id="clickablePoint" position="1 2 -2" radius="0.8" color="#000000" opacity="0.1" visible="false">
             <a-animation></a-animation>
         </a-sphere>
 
-        <!-- Pop-up entity -->
-        <!-- <a-entity id="popup" position="1.2 1.2 -3"
-            text="value: Clicked!; color: black; background-color:white; width: 4;" visible="false"></a-entity> -->
-        <!-- Create a sphere to represent the magnifying glass -->
-        
-        <!-- <a-entity zoom-in id="magnifying-glass" position="0 1.5 -5" geometry="primitive: sphere; radius: 0.5;"
-            material="color: transparent; opacity: 0.5">
-            <a-camera id="magnifying-camera"></a-camera>
-        </a-entity> -->
 
-        <!-- Create a camera to view the zoomed-in background -->
-
-        <!-- <a-sphere></a-sphere> -->
-
-
-
-        <a-camera id="camera">
+        <a-camera id="mg-camera">
 
             <a-entity id="menu" position="0 0 -1">
 
@@ -139,15 +128,16 @@
                 </a-entity>
 
                 <a-plane width="0.5" height="0.5" visible="false" id="info_hammer" position="0 -0.5 0"> <a-text
-                        value="Dolomite" color="black" align="center" width="1" background=""></a-text></a-plane>
-
-
+                        value="Stone" color="black" align="center" width="1" background=""></a-text></a-plane>
             </a-entity>
-            <!-- <a-sphere id="magnifying-glass" opacity="0.5" radius="0.5" position="0 0 -1" visible="false"></a-sphere> -->
-            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false" id="cursor_tool" >
+
+
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false"
+                id="cursor_tool">
                 <a-image src="#magnifying_glass" width="1" height="1" geometry="primitive: plane"
                     material="side: double;"></a-image>
-                <!-- <a-circle id="zoom-on-hover" material="color: blue; opacity: 0.5" position="0 0 -1" radius="0.4"></a-circle> -->
+
+
             </a-entity>
 
             <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
@@ -155,7 +145,14 @@
                     material="side: double;"></a-image>
             </a-entity>
 
+            <!-- Magnifying glass -->
+            <!-- <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="mg_circle" visible="false"> -->
+            <a-circle id="mg-circle" radius="0.5" position="0 0 -5" material="shader: flat; transparent: true;"
+                visible="false"></a-circle>
+            <!-- </a-entity> -->
+
         </a-camera>
+
         <a-entity cursor="rayOrigin: mouse"></a-entity>
 
 
@@ -165,53 +162,55 @@
     <img id="zoomed-image" src="materials/forest.jpg" style="display: none;">
 
     <script>
-        //Show magnifying glass and options
-        function show_magnifying_glass() {
 
+        document.addEventListener('DOMContentLoaded', function () {
+            var background = document.querySelector('#background-image');
+            var magnifyingGlass = document.querySelector('#mg-circle');
+            var magnifyingCamera = document.querySelector('#mg-camera');
+            var renderer = document.querySelector('a-scene').renderer;
+
+            function updateMagnifyingGlass(event) {
+                var mouseX = event.clientX;
+                var mouseY = event.clientY;
+
+                var windowWidth = window.innerWidth;
+                var windowHeight = window.innerHeight;
+
+                var mouseXScene = (mouseX / windowWidth) * 2 - 1;
+                var mouseYScene = -(mouseY / windowHeight) * 2 + 1;
+
+                // Adjust the position of the magnifying glass to follow the mouse cursor
+                magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -1);
+
+                // Adjust the position of the camera to zoom in more
+                magnifyingCamera.object3D.position.set(mouseXScene * 2, mouseYScene * 2, -5);
+
+                // Adjust the scale of the background image
+                background.object3D.scale.set(10, 10, 10);
+
+                // Render the background image from the perspective of the magnifying camera
+                renderer.render(background.object3D, magnifyingCamera.object3DMap.camera);
+
+                // Update the magnifying glass texture
+                magnifyingGlass.setAttribute('material', 'src', renderer.domElement.toDataURL());
+            }
+
+            document.addEventListener('mousemove', updateMagnifyingGlass);
+
+            // Call the show_magnifying_glass function here
+            // show_magnifying_glass();
+        });
+
+        // Define the show_magnifying_glass function
+        function show_magnifying_glass() {
             var magn_option = document.getElementById('zoom_controls');
             magn_option.setAttribute('visible', 'true');
 
-            var magnifyingGlass = document.getElementById('cursor_tool');
-            magnifyingGlass.setAttribute('visible', 'true');
+            // var magnifyingGlass = document.getElementById('magnifying-glass');
+            // magnifyingGlass.setAttribute('visible', 'true');
 
-            // Access the magnifying glass element
-            var magnifyingGlass = document.getElementById('magnifying-glass');
-            magnifyingGlass.setAttribute('visible', 'true');
-
-            // Access the magnifying camera
-            var magnifyingCamera = document.querySelector('#magnifying-camera');
-
-            // // Set the magnifying camera as a child of the magnifying glass
-            // var magnifyingGlass = document.querySelector('#magnifying-glass');
-            magnifyingGlass.appendChild(magnifyingCamera);
-
-            // Set the magnifying camera's position and rotation
-            magnifyingCamera.object3D.position.set(0, 0, 0); // Inside the magnifying glass
-
-            magnifyingCamera.object3D.rotation.set(0, 0, 0); // Make adjustments as needed
-
-            // Set the zoom factor for the magnifying camera
-            magnifyingCamera.setAttribute('zoom', '2'); // Adjust the zoom level as needed
-
-            // AFRAME.registerComponent('zoom-in'){
-            // // Listen for mousemove event to track mouse position
-            document.addEventListener('mousemove', function (event) {
-                // // Calculate the position of the mouse relative to the window
-                // var mouseX = event.clientX;
-                // var mouseY = event.clientY;
-
-                // // Get the width and height of the window
-                // var windowWidth = window.innerWidth;
-                // var windowHeight = window.innerHeight;
-
-                // // Calculate the position of the mouse relative to the window center
-                // var mouseXCentered = (mouseX - windowWidth / 2) / windowWidth;
-                // var mouseYCentered = (mouseY - windowHeight / 2) / windowHeight;
-
-                // // Set the position of the magnifying glass based on mouse position
-                // magnifyingGlass.setAttribute('position', mouseXCentered * 3 + ' ' + mouseYCentered * 3 + ' -5');
-                // // zoomIn();
-            });
+            var mg_circle = document.getElementById('mg-circle');
+            mg_circle.setAttribute('visible', 'true');
         }
 
         //Hide magnifying glass and options
@@ -221,6 +220,9 @@
 
             var magnifyingGlass = document.getElementById('cursor_tool');
             magnifyingGlass.setAttribute('visible', 'false');
+
+            var mg_circle = document.getElementById('mg-circle');
+            mg_circle.setAttribute('visible', 'false');
         }
 
         let scale = 1;
