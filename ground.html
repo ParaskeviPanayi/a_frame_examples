@@ -147,8 +147,8 @@
 
             <!-- Magnifying glass -->
             <!-- <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="mg_circle" visible="false"> -->
-            <a-circle id="mg-circle" radius="0.5" position="0 0 -5" material="shader: flat; transparent: true;"
-                visible="false"></a-circle>
+            <a-circle id="mg-circle" radius="0.4" position="0 0 0" material="shader: flat; transparent: true;"visible="false">
+            </a-circle>
             <!-- </a-entity> -->
 
         </a-camera>
@@ -321,6 +321,8 @@
                 zoomOut();
             }
         });
+
+    
 
 
         AFRAME.registerComponent('clickable', {
