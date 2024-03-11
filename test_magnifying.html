@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <style>
     #magnifying-glass {
       cursor: none;
@@ -12,24 +12,38 @@
 
 <body>
   <a-scene>
+
+    <a-assets>
+      <img id="forest" src="materials/0.jpg">
+      <img id="forest2" src="materials/0.jpg">
+      <img id="magnifying_glass" src="materials/189254.svg">
+      <img id="hammer_pic" src="materials/hammer-silhouette_59491.png">
+      <img id="lightbulb_pic" src="materials/idea_11995541.png">
+    </a-assets>
+
+
     <!-- 360-degree image background -->
-    <a-sky id="background2-image" src="materials/0.jpg" rotation="0 0 0" ></a-sky>
+    <a-sky id="background2-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
 
     <a-sky id="background-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
 
 
-    <!-- Camera for the magnifying glass -->
+
+    <!-- Entity representing the clickable point -->
+    <a-sphere id="clickablePoint" position="1 2 -2" radius="0.8" color="#000000" opacity="0.1" visible="false">
+      <a-animation></a-animation>
+    </a-sphere>
+
+    <!-- Camera -->
     <a-camera id="magnifying-camera">
-      <!-- Magnifying glass -->
-      <a-circle id="magnifying-glass" position="0 0 -5" radius="0.5"
-        material="shader: flat; transparent: true; "></a-circle>
+
 
       <a-entity id="menu" position="0 0 -1">
 
         <!-- Start of Magnifying Glass Elements -->
         <!-- Show -->
         <a-plane id="Mag_glass_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.7 0" clickable>
-          <a-text value="Magnifying Glass" color="black" width="1"></a-text>
+          <a-text value="Magnifying Glass" align="center" color="black" width="1"></a-text>
         </a-plane>
 
         <a-entity id="zoom_controls" visible="false">
@@ -58,24 +72,24 @@
 
         <!-- hammer -->
         <a-plane id="hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.7 0" clickable>
-          <a-text value="Hammer" color="black" width="1"></a-text>
+          <a-text value="Hammer" align="center" color="black" width="1"></a-text>
         </a-plane>
 
         <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.59 0" clickable
           visible="false">
-          <a-text value="hide" color="black" width="1"></a-text>
+          <a-text value="hide" align="center" color="black" width="1"></a-text>
         </a-plane>
 
         <!-- <a-box color="green" width="2" height="0.2" depth="0.1" position="0 -1 0" clickable></a-box> -->
 
         <!-- Compass -->
         <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.05 0.7 0" clickable>
-          <a-text value="Compass" color="black" width="1"></a-text>
+          <a-text value="Compass" align="center" color="black" width="1"></a-text>
         </a-plane>
 
         <!-- Measuring tapes -->
         <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.6 0.7 0" clickable>
-          <a-text value="Measuring tapes" color="black" width="1"></a-text>
+          <a-text value="Measuring tapes" align="center" color="black" width="1"></a-text>
         </a-plane>
 
         <!-- Lightbulb -->
@@ -86,13 +100,152 @@
 
         <a-plane width="0.5" height="0.5" visible="false" id="info_hammer" position="0 -0.5 0"> <a-text value="Stone"
             color="black" width="1" background=""></a-text></a-plane>
+
       </a-entity>
+
+      <!-- Magnifying glass -->
+      <a-circle id="magnifying-glass" position="0 0 -5" radius="0.5" material="shader: flat; transparent: true; "
+        visible="false"></a-circle>
+
     </a-camera>
+
+    <a-entity cursor="rayOrigin: mouse"></a-entity>
+
+    <!-- <a-entity id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity> -->
+
+
 
 
   </a-scene>
 
   <script>
+    // Define the show_magnifying_glass function
+    function show_magnifying_glass() {
+      var magn_option = document.getElementById('zoom_controls');
+      magn_option.setAttribute('visible', 'true');
+
+      var magnifyingGlass = document.getElementById('magnifying-glass');
+      magnifyingGlass.setAttribute('visible', 'true');
+
+      console.log("show mg");
+    }
+
+    //Hide magnifying glass and options
+    function hide_magnifying_glass() {
+      var magn_option = document.getElementById('zoom_controls');
+      magn_option.setAttribute('visible', 'false');
+
+      var magnifyingGlass = document.getElementById('magnifying-glass');
+      magnifyingGlass.setAttribute('visible', 'false');
+
+    }
+
+    let scale = 1;
+    // Zoom in
+    function zoomIn() {
+      scale += 0.1;
+      document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
+    }
+
+    //Zoom out
+    function zoomOut() {
+      if (scale > 0.2) { // Limit minimum zoom level
+        scale -= 0.1;
+        document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
+      }
+    }
+
+    //reset Zoom
+    function resetZoom() {
+      scale = 1;
+      document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
+    }
+
+    //Show hammer and clikable points 
+    function show_hammer() {
+      var hammer_tool = document.getElementById('hammer_tool');
+      hammer_tool.setAttribute('visible', 'true');
+
+      //hide button
+      var hide_hammer = document.getElementById('hide_hammer');
+      hide_hammer.setAttribute('visible', 'true');
+
+      var clickablePoint = document.getElementById('clickablePoint');
+      clickablePoint.setAttribute('visible', 'true');
+
+      // var info_message = document.getElementById('info_hammer');
+      // info_message.setAttribute('visible', 'true');
+
+      // Get the clickable point entity
+      var clickablePoint = document.getElementById('clickablePoint');
+
+      // Add click event listener to the clickable point
+      clickablePoint.addEventListener('click', function (evt) {
+        // Get the pop-up entity
+        // var popup = document.getElementById('popup');
+        // // Show the pop-up
+        // popup.setAttribute('visible', true);
+
+        var info_message = document.getElementById('info_hammer');
+        info_message.setAttribute('visible', 'true');
+
+
+        //Hide the pop-up after 2 seconds
+        setTimeout(function () {
+          // popup.setAttribute('visible', false);
+          info_message.setAttribute('visible', false);
+
+        }, 3000);
+      });
+    }
+
+    //Hide hammer
+    function hide_hammer() {
+      var hammer_tool = document.getElementById('hammer_tool');
+      hammer_tool.setAttribute('visible', 'false');
+
+      var clickablePoint = document.getElementById('clickablePoint');
+      clickablePoint.setAttribute('visible', 'false');
+
+      //show light lightbulb
+      // var lightbulb = document.getElementById('lightbulb');
+      // lightbulb.setAttribute('visible', 'false');
+
+      var clickablePoint = document.getElementById('hide_hammer');
+      clickablePoint.setAttribute('visible', 'false');
+    }
+
+    AFRAME.registerComponent('clickable', {
+      init: function () {
+
+        var button = this.el; // Reference to the box element
+        button.addEventListener('click', function () {
+          // console.log('Button Clicked!');
+
+          if (button.id === "Mag_glass_button") {
+            show_magnifying_glass();
+            console.log("TTTTTTTTTTTT");
+          }
+          else if (button.id === "zoomin_button") {
+            zoomIn();
+          } else if (button.id === "zoomout_button") {
+            zoomOut();
+          } else if (button.id === "reset_button") {
+            resetZoom();
+          } else if (button.id === "hide_button") {
+            hide_magnifying_glass();
+          } else if (button.id === "hammer") {
+            show_hammer();
+            console.log('Hammer!');
+          } else if (button.id === "hide_hammer") {
+            hide_hammer();
+
+          }
+        });
+      }
+    });
+
+
     document.addEventListener('DOMContentLoaded', function () {
       var background = document.querySelector('#background2-image');
       var magnifyingGlass = document.querySelector('#magnifying-glass');
@@ -127,34 +280,6 @@
     });
 
 
-    AFRAME.registerComponent('clickable', {
-      init: function () {
-
-        var button = this.el; // Reference to the box element
-        button.addEventListener('click', function () {
-          // console.log('Button Clicked!');
-
-          if (button.id === "Mag_glass_button") {
-            show_magnifying_glass();
-          }
-          else if (button.id === "zoomin_button") {
-            zoomIn();
-          } else if (button.id === "zoomout_button") {
-            zoomOut();
-          } else if (button.id === "reset_button") {
-            resetZoom();
-          } else if (button.id === "hide_button") {
-            hide_magnifying_glass();
-          } else if (button.id === "hammer") {
-            show_hammer();
-            console.log('Hammer!');
-          } else if (button.id === "hide_hammer") {
-            hide_hammer();
-
-          }
-        });
-      }
-    });
 
 
 

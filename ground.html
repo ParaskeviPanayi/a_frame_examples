@@ -5,7 +5,7 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+
     <title>Explore Forest</title>
     <style>
         #menu-controls {
@@ -40,6 +40,10 @@
 
 <body>
     <a-scene>
+
+        <!-- Button to show the magnifying glass circle -->
+        <button id="showMagnifyingGlassButton">Show Magnifying Glass</button>
+
         <a-assets>
             <img id="forest" src="materials/0.jpg">
             <img id="forest2" src="materials/0.jpg">
@@ -48,21 +52,19 @@
             <img id="lightbulb_pic" src="materials/idea_11995541.png">
         </a-assets>
 
-
         <a-entity id="forest_pic">
             <a-sky src="#forest" rotation="0 0 0"></a-sky>
         </a-entity>
 
         <a-sky src="#forest2" rotation="0 0 0"></a-sky>
 
-
+        
         <!-- Entity representing the clickable point -->
         <a-sphere id="clickablePoint" position="1 2 -2" radius="0.8" color="#000000" opacity="0.1" visible="false">
             <a-animation></a-animation>
         </a-sphere>
 
         <a-camera id="mg-camera">
-
             <!-- Magnifying glass -->
             <a-circle id="mg-circle" radius="0.4" position="0 0 0" material="shader: flat; transparent: true;"
                 visible="true">
@@ -152,7 +154,7 @@
 
         </a-camera>
 
-        <a-entity cursor="rayOrigin: mouse" id="background2-image"></a-entity>
+        <a-entity cursor="rayOrigin: mouse"></a-entity>
 
         <!-- Image used for zoomed view -->
         <img id="zoomed-image" src="materials/forest.jpg" style="display: none;">
