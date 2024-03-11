@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+   
     <title>Explore Forest</title>
     <style>
         #menu-controls {
@@ -38,9 +39,10 @@
 </head>
 
 <body>
-    <a-scene id="zoomed-content">
+    <a-scene>
         <a-assets>
             <img id="forest" src="materials/0.jpg">
+            <img id="forest2" src="materials/0.jpg">
             <img id="magnifying_glass" src="materials/189254.svg">
             <img id="hammer_pic" src="materials/hammer-silhouette_59491.png">
             <img id="lightbulb_pic" src="materials/idea_11995541.png">
@@ -51,7 +53,7 @@
             <a-sky src="#forest" rotation="0 0 0"></a-sky>
         </a-entity>
 
-        <a-sky id="background-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
+        <a-sky src="#forest2" rotation="0 0 0"></a-sky>
 
 
         <!-- Entity representing the clickable point -->
@@ -59,8 +61,12 @@
             <a-animation></a-animation>
         </a-sphere>
 
-
         <a-camera id="mg-camera">
+
+            <!-- Magnifying glass -->
+            <a-circle id="mg-circle" radius="0.4" position="0 0 0" material="shader: flat; transparent: true;"
+                visible="true">
+            </a-circle>
 
             <a-entity id="menu" position="0 0 -1">
 
@@ -68,31 +74,31 @@
                 <!-- Show -->
                 <a-plane id="Mag_glass_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.7 0"
                     clickable>
-                    <a-text value="Magnifying Glass" color="black" align="center" width="1"></a-text>
+                    <a-text value="Magnifying Glass" color="black" width="1"></a-text>
                 </a-plane>
 
                 <a-entity id="zoom_controls" visible="false">
                     <a-plane id="zoomin_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.59 0"
                         clickable>
-                        <a-text value="Zoom In (+)" color="black" align="center" width="1"></a-text>
+                        <a-text value="Zoom In (+)" color="black" width="1"></a-text>
                     </a-plane>
 
 
                     <a-plane id="zoomout_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0"
                         clickable>
-                        <a-text value="Zoom Out (-)" color="black" align="center" width="1"></a-text>
+                        <a-text value="Zoom Out (-)" color="black" width="1"></a-text>
                     </a-plane>
 
 
                     <a-plane id="reset_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.37 0"
                         clickable>
-                        <a-text value="Reset Zoom (0)" color="black" align="center" width="1"></a-text>
+                        <a-text value="Reset Zoom (0)" color="black" width="1"></a-text>
                     </a-plane>
 
 
                     <a-plane id="hide_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.26 0"
                         clickable>
-                        <a-text value="hide" color="black" align="center" width="1"></a-text>
+                        <a-text value="hide" color="black" width="1"></a-text>
                     </a-plane>
                 </a-entity>
 
@@ -100,12 +106,12 @@
 
                 <!-- hammer -->
                 <a-plane id="hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.7 0" clickable>
-                    <a-text value="Hammer" color="black" align="center" width="1"></a-text>
+                    <a-text value="Hammer" color="black" width="1"></a-text>
                 </a-plane>
 
                 <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.59 0"
                     clickable visible="false">
-                    <a-text value="hide" color="black" align="center" width="1"></a-text>
+                    <a-text value="hide" color="black" width="1"></a-text>
                 </a-plane>
 
                 <!-- <a-box color="green" width="2" height="0.2" depth="0.1" position="0 -1 0" clickable></a-box> -->
@@ -113,12 +119,12 @@
                 <!-- Compass -->
                 <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.05 0.7 0"
                     clickable>
-                    <a-text value="Compass" color="black" align="center" width="1"></a-text>
+                    <a-text value="Compass" color="black" width="1"></a-text>
                 </a-plane>
 
                 <!-- Measuring tapes -->
                 <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.6 0.7 0" clickable>
-                    <a-text value="Measuring tapes" color="black" align="center" width="1"></a-text>
+                    <a-text value="Measuring tapes" color="black" width="1"></a-text>
                 </a-plane>
 
                 <!-- Lightbulb -->
@@ -128,9 +134,8 @@
                 </a-entity>
 
                 <a-plane width="0.5" height="0.5" visible="false" id="info_hammer" position="0 -0.5 0"> <a-text
-                        value="Stone" color="black" align="center" width="1" background=""></a-text></a-plane>
+                        value="Stone" color="black" width="1" background=""></a-text></a-plane>
             </a-entity>
-
 
             <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false"
                 id="cursor_tool">
@@ -145,62 +150,18 @@
                     material="side: double;"></a-image>
             </a-entity>
 
-            <!-- Magnifying glass -->
-            <!-- <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="mg_circle" visible="false"> -->
-            <a-circle id="mg-circle" radius="0.4" position="0 0 0" material="shader: flat; transparent: true;"visible="false">
-            </a-circle>
-            <!-- </a-entity> -->
-
         </a-camera>
 
-        <a-entity cursor="rayOrigin: mouse"></a-entity>
+        <a-entity cursor="rayOrigin: mouse" id="background2-image"></a-entity>
 
+        <!-- Image used for zoomed view -->
+        <img id="zoomed-image" src="materials/forest.jpg" style="display: none;">
 
     </a-scene>
 
-    <!-- Image used for zoomed view -->
-    <img id="zoomed-image" src="materials/forest.jpg" style="display: none;">
+
 
     <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var background = document.querySelector('#background-image');
-            var magnifyingGlass = document.querySelector('#mg-circle');
-            var magnifyingCamera = document.querySelector('#mg-camera');
-            var renderer = document.querySelector('a-scene').renderer;
-
-            function updateMagnifyingGlass(event) {
-                var mouseX = event.clientX;
-                var mouseY = event.clientY;
-
-                var windowWidth = window.innerWidth;
-                var windowHeight = window.innerHeight;
-
-                var mouseXScene = (mouseX / windowWidth) * 2 - 1;
-                var mouseYScene = -(mouseY / windowHeight) * 2 + 1;
-
-                // Adjust the position of the magnifying glass to follow the mouse cursor
-                magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -1);
-
-                // Adjust the position of the camera to zoom in more
-                magnifyingCamera.object3D.position.set(mouseXScene * 2, mouseYScene * 2, -5);
-
-                // Adjust the scale of the background image
-                background.object3D.scale.set(10, 10, 10);
-
-                // Render the background image from the perspective of the magnifying camera
-                renderer.render(background.object3D, magnifyingCamera.object3DMap.camera);
-
-                // Update the magnifying glass texture
-                magnifyingGlass.setAttribute('material', 'src', renderer.domElement.toDataURL());
-            }
-
-            document.addEventListener('mousemove', updateMagnifyingGlass);
-
-            // Call the show_magnifying_glass function here
-            // show_magnifying_glass();
-        });
-
         // Define the show_magnifying_glass function
         function show_magnifying_glass() {
             var magn_option = document.getElementById('zoom_controls');
@@ -322,8 +283,6 @@
             }
         });
 
-    
-
 
         AFRAME.registerComponent('clickable', {
             init: function () {
@@ -352,6 +311,43 @@
                     }
                 });
             }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var background = document.querySelector('#background2-image');
+            var magnifyingGlass = document.querySelector('#mg-circle');
+            var magnifyingCamera = document.querySelector('#mg-camera');
+            var renderer1 = document.querySelector('a-scene').renderer;
+
+            function updateMagnifyingGlass(event) {
+                var mouseX = event.clientX;
+                var mouseY = event.clientY;
+
+                var windowWidth = window.innerWidth;
+                var windowHeight = window.innerHeight;
+
+                var mouseXScene = (mouseX / windowWidth) * 2 - 1;
+                var mouseYScene = -(mouseY / windowHeight) * 2 + 1;
+
+                // Adjust the position of the magnifying glass to follow the mouse cursor
+                magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -1);
+
+                // Adjust the position of the camera to zoom in more
+                magnifyingCamera.object3D.position.set(mouseXScene * 2, mouseYScene * 2, -5);
+
+                // Adjust the scale of the background image
+                background.object3D.scale.set(10, 10, 10);
+
+                // Render the background image from the perspective of the magnifying camera
+                renderer1.render(background.object3D, magnifyingCamera.object3DMap.camera);
+
+                // Update the magnifying glass texture
+                magnifyingGlass.setAttribute('material', 'src', renderer.domElement.toDataURL());
+            }
+
+            document.addEventListener('mousemove', updateMagnifyingGlass);
+
         });
 
     </script>
