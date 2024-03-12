@@ -22,10 +22,8 @@
       <img id="lightbulb_pic" src="materials/idea_11995541.png">
     </a-assets>
 
-
-    <!-- 360-degree image background -->
+    <!-- 360-degree images for background -->
     <a-sky id="background2-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
-
     <a-sky id="background-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
 
     <!-- Entity representing the clickable point -->
@@ -40,15 +38,14 @@
 
         <!-- Start of Magnifying Glass Elements -->
         <!-- Show -->
-        <a-plane id="Mag_glass_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.7 0" clickable>
-          <a-text value="Magnifying Glass" align="center" color="black" width="1"></a-text>
+        <a-plane id="Mag_glass_button" width="0.4" height="0.1" color="#4681f4" position="-1 0.7 0" clickable>
+          <a-text value="Magnifying Glass " align="center" color="#000000" width="1"></a-text>
         </a-plane>
 
         <a-entity id="zoom_controls" visible="false">
           <!-- <a-plane id="zoomin_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.59 0" clickable>
             <a-text value="Zoom In (+)" color="black" width="1"></a-text>
           </a-plane>
-
 
           <a-plane id="zoomout_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0"
             clickable>
@@ -62,10 +59,9 @@
             <a-text value="hide" color="black" width="1"></a-text>
           </a-plane>
         </a-entity>
-
         <!-- End of Magnifying Glass Elements -->
 
-        <!-- hammer -->
+        <!-- Start of hammer -->
         <a-plane id="hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.7 0" clickable>
           <a-text value="Hammer" align="center" color="black" width="1"></a-text>
         </a-plane>
@@ -75,17 +71,11 @@
           <a-text value="hide" align="center" color="black" width="1"></a-text>
         </a-plane>
 
-        <!-- <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="cursor_tool" visible="false"
-          id="cursor_tool">
-          <a-image src="#magnifying_glass" width="1" height="1" geometry="primitive: plane"
-            material="side: double;"></a-image>
-        </a-entity> -->
-
         <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
           <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-entity>
-        <!-- <a-box color="green" width="2" height="0.2" depth="0.1" position="0 -1 0" clickable></a-box> -->
+        <!-- End of hammer -->
 
         <!-- Compass -->
         <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.05 0.7 0" clickable>
@@ -117,9 +107,6 @@
     <a-entity cursor="rayOrigin: mouse"></a-entity>
 
     <!-- <a-entity id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity> -->
-
-
-
 
   </a-scene>
 
@@ -167,7 +154,7 @@
     // }
 
 
-    //Keyboard shortcuts
+    //-------------Keyboard shortcuts--------------------
     //Reset zoom : alt and 0
     document.addEventListener('keydown', (event) => {
       if (event.altKey && event.key === '0') {
