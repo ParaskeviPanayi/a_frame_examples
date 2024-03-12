@@ -20,6 +20,7 @@
       <img id="magnifying_glass" src="materials/189254.svg">
       <img id="hammer_pic" src="materials/hammer-silhouette_59491.png">
       <img id="lightbulb_pic" src="materials/idea_11995541.png">
+      <img id="compass_pic" src="materials/compass.png">
     </a-assets>
 
     <!-- 360-degree images for background -->
@@ -81,6 +82,12 @@
         <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.05 0.7 0" clickable>
           <a-text value="Compass" align="center" color="black" width="1"></a-text>
         </a-plane>
+
+        <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="compass_tool" visible="true">
+          <a-image src="#compass_pic" width="0.5" height="0.5" geometry="primitive: plane"
+            material="side: double;"></a-image>
+        </a-entity>
+
 
         <!-- Measuring tapes -->
         <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.6 0.7 0" clickable>
@@ -152,7 +159,10 @@
     //   scale = 1;
     //   document.getElementById('zoomed-content').style.transform = `scale(${scale})`;
     // }
+    
+    function show_compass(){
 
+    }
 
     //-------------Keyboard shortcuts--------------------
     //Reset zoom : alt and 0
@@ -276,40 +286,6 @@
         });
       }
     });
-
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //   var background = document.querySelector('#background2-image');
-    //   var magnifyingGlass = document.querySelector('#magnifying-glass');
-    //   var magnifyingCamera = document.querySelector('#magnifying-camera');
-    //   var renderer = document.querySelector('a-scene').renderer;
-
-    //   function updateMagnifyingGlass(event) {
-    //     var mouseX = event.clientX;
-    //     var mouseY = event.clientY;
-
-    //     var windowWidth = window.innerWidth;
-    //     var windowHeight = window.innerHeight;
-
-    //     var mouseXScene = (mouseX / windowWidth) * 2 - 1;
-    //     var mouseYScene = -(mouseY / windowHeight) * 2 + 1;
-
-
-    //     // Adjust the position of the magnifying glass to follow the mouse cursor
-    //     magnifyingGlass.object3D.position.set(mouseXScene, mouseYScene, -1);
-
-    //     // Adjust the position of the camera to zoom in more
-    //     magnifyingCamera.object3D.position.set(mouseXScene * 2, mouseYScene * 2, -1);
-
-    //     // Render the background image from the perspective of the magnifying camera
-    //     renderer.render(background.object3D, magnifyingCamera.object3DMap.camera);
-
-    //     // Update the magnifying glass texture
-    //     magnifyingGlass.setAttribute('material', 'src', renderer.domElement.toDataURL());
-    //   }
-
-    //   document.addEventListener('mousemove', updateMagnifyingGlass);
-    // });
 
   </script>
 </body>
