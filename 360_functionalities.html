@@ -118,17 +118,6 @@
 
   <script>
 
-    AFRAME.registerComponent('compass', {
-      init: function () {
-        this.pointer = document.getElementById('compass_pic');
-      },
-
-      tick: function () {
-        var yRotation = this.el.getAttribute('rotation').y;
-        this.pointer.style.transform = 'rotate(' + yRotation + 'deg)';
-      }
-    });
-
     // Define the show_magnifying_glass function
     function show_magnifying_glass() {
       var magn_option = document.getElementById('zoom_controls');
@@ -137,11 +126,10 @@
       var magnifyingGlass = document.getElementById('magnifying-glass');
       magnifyingGlass.setAttribute('visible', 'true');
 
+      //change color of button
       var magnifyingGlass = document.getElementById('Mag_glass_button');
       magnifyingGlass.setAttribute('color', 'black');
 
-
-      console.log("show mg");
     }
 
     //Hide magnifying glass and options
@@ -177,6 +165,11 @@
     function show_compass() {
       var compass_option = document.getElementById('compass_tool');
       compass_option.setAttribute('visible', 'true');
+
+      //change color of button 
+      var compass = document.getElementById('compass');
+      compass.setAttribute('color', 'black');
+
     }
 
     //-------------Keyboard shortcuts--------------------
