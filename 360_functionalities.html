@@ -13,15 +13,15 @@
 
 <body>
 
-  
+
 
   <a-scene>
-    
+
 
     <a-assets>
       <img id="forest" src="materials/0.jpg">
       <img id="forest2" src="materials/0.jpg">
-      <img id="magnifying_glass" src="materials/189254.svg">
+      <img id="magnifying_glass" src="materials/magnifying-glass_2661358.png">
       <img id="hammer_pic" src="materials/hammer-silhouette_59491.png">
       <img id="lightbulb_pic" src="materials/idea_11995541.png">
       <img id="compass_pic" src="materials/compass.png">
@@ -41,64 +41,59 @@
 
       <a-entity id="menu" position="0 0 -1">
 
-        <!-- Start of Magnifying Glass Elements -->
-        <!-- Show -->
-        <a-circle id="Mag_glass_button" radius="0.1" color="#4681f4" position="-1 0.7 0" clickable>
-          <!-- <a-text value="Magnifying Glass" align="right" color="#000000" width="1"></a-text> -->
-          <a-image src="#magnifying_glass" width="0.1" height="0.1" geometry="primitive: plane"
-            material="side: double;"></a-image>
-        </a-circle>
+        <!------------------------Tools--------------------->
 
-        <a-entity id="zoom_controls" visible="false">
-          <!-- <a-plane id="zoomin_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.59 0" clickable>
-            <a-text value="Zoom In (+)" color="black" width="1"></a-text>
-          </a-plane>
-
-          <a-plane id="zoomout_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0"
-            clickable>
-            <a-text value="Zoom Out (-)" color="black" width="1"></a-text>
-          </a-plane>
-          <a-plane id="reset_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.37 0" clickable>
-            <a-text value="Reset Zoom (0)" color="black" width="1"></a-text>
-          </a-plane> -->
-
-          <a-plane id="hide_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0" clickable>
-            <a-text value="hide" color="black" width="1"></a-text>
-          </a-plane>
-        </a-entity>
-        <!-- End of Magnifying Glass Elements -->
-
-        <!-- Start of hammer -->
-        <a-plane id="hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.7 0" clickable>
-          <a-text value="Hammer" align="center" color="black" width="1"></a-text>
-        </a-plane>
-
-        <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.59 0" clickable
-          visible="false">
-          <a-text value="hide" align="center" color="black" width="1"></a-text>
-        </a-plane>
+        <!-- Magnifying glass -->
+        <a-circle id="magnifying-glass" position="0 0 -5" radius="0.5" material="shader: flat; transparent: true; "
+          visible="false"></a-circle>
 
         <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
           <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-entity>
-        <!-- End of hammer -->
-
-        <!-- Compass -->
-        <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.05 0.7 0" clickable>
-          <a-text value="Compass" align="center" color="black" width="1"></a-text>
-        </a-plane>
 
         <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="compass_tool" visible="false">
           <a-image src="#compass_pic" width="0.5" height="0.5" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-entity>
 
+        <!------------------------- Buttons--------------------------------->
+        <!--  Magnifying Glass  -->
+        <a-circle id="Mag_glass_button" radius="0.12" color="white" position="-0.5 0.7 0" clickable>
+          <!-- <a-text value="Magnifying Glass" align="right" color="#000000" width="1"></a-text> -->
+          <a-image src="#magnifying_glass" width="0.15" height="0.15" geometry="primitive: plane"
+            material="side: double;"></a-image>
+        </a-circle>
+
+        <a-entity id="zoom_controls" visible="false">
+          <a-plane id="hide_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0" clickable>
+            <a-text value="hide" color="black" width="1"></a-text>
+          </a-plane>
+        </a-entity>
+
+        <!-- Hammer -->
+        <a-circle id="hammer" radius="0.12"  position="-0.2 0.7 0" clickable>
+          <!-- <a-text value="Hammer" align="center" color="black" width="1"></a-text> -->
+          <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
+            material="side: double;"></a-image>
+        </a-circle>
+
+        <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.59 0" clickable
+          visible="false">
+          <a-text value="hide" align="center" color="black" width="1"></a-text>
+        </a-plane>
+
+        <!-- Compass -->
+        <a-circle id="compass" color="white"  radius="0.12"  position="0.1 0.7 0" clickable>
+          <a-image src="#compass_pic" width="0.15" height="0.15" geometry="primitive: plane"
+            material="side: double;"></a-image>
+          <!-- <a-text value="Compass" align="center" color="black" width="1"></a-text> -->
+        </a-circle>
 
         <!-- Measuring tapes -->
-        <a-plane id="compass" color="white" width="0.5" height="0.1" depth="0.1" position="0.6 0.7 0" clickable>
-          <a-text value="Measuring tapes" align="center" color="black" width="1"></a-text>
-        </a-plane>
+        <a-circle id="measuring_tapes" color="white" radius="0.12" position="0.4 0.7 0" clickable>
+          <!-- <a-text value="Measuring tapes" align="center" color="black" width="1"></a-text> -->
+        </a-circle>
 
         <!-- Lightbulb -->
         <a-entity id="lightbulb" width="0.1" height="0.1" depth="0.1" position="1.2 -0.5 0" clikable>
@@ -111,15 +106,12 @@
 
       </a-entity>
 
-      <!-- Magnifying glass -->
-      <a-circle id="magnifying-glass" position="0 0 -5" radius="0.5" material="shader: flat; transparent: true; "
-        visible="false"></a-circle>
 
     </a-camera>
 
     <a-entity cursor="rayOrigin: mouse"></a-entity>
 
-   
+
     <!-- <a-entity id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity> -->
 
   </a-scene>
@@ -144,6 +136,10 @@
 
       var magnifyingGlass = document.getElementById('magnifying-glass');
       magnifyingGlass.setAttribute('visible', 'true');
+
+      var magnifyingGlass = document.getElementById('Mag_glass_button');
+      magnifyingGlass.setAttribute('color', 'black');
+
 
       console.log("show mg");
     }
