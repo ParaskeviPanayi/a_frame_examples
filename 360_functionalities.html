@@ -16,15 +16,14 @@
 
 
   <a-scene>
-
-
     <a-assets>
       <img id="forest" src="materials/0.jpg">
       <img id="forest2" src="materials/0.jpg">
       <img id="magnifying_glass" src="materials/magnifying-glass_2661358.png">
-      <img id="hammer_pic" src="materials/hammer-silhouette_59491.png">
+      <img id="hammer_pic" src="materials/hammer_3484771.png">
       <img id="lightbulb_pic" src="materials/idea_11995541.png">
       <img id="compass_pic" src="materials/compass.png">
+      <img id="measuring_tapes" src="materials/measuring-tape_1172534.png">
     </a-assets>
 
     <!-- 360-degree images for background -->
@@ -47,11 +46,13 @@
         <a-circle id="magnifying-glass" position="0 0 -5" radius="0.5" material="shader: flat; transparent: true; "
           visible="false"></a-circle>
 
+        <!-- Hammer -->
         <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
-          <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
+          <a-image src="#hammer_pic" width="0.5" height="0.5" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-entity>
 
+        <!--  -->
         <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="compass_tool" visible="false">
           <a-image src="#compass_pic" width="0.5" height="0.5" geometry="primitive: plane"
             material="side: double;"></a-image>
@@ -72,19 +73,19 @@
         </a-entity>
 
         <!-- Hammer -->
-        <a-circle id="hammer" radius="0.12"  position="-0.2 0.7 0" clickable>
+        <a-circle id="hammer" radius="0.12" position="-0.2 0.7 0" clickable>
           <!-- <a-text value="Hammer" align="center" color="black" width="1"></a-text> -->
-          <a-image src="#hammer_pic" width="0.1" height="0.1" geometry="primitive: plane"
+          <a-image src="#hammer_pic" width="0.15" height="0.15" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-circle>
 
-        <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.5 0.59 0" clickable
-          visible="false">
+        <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.2 0.5 0" clickable
+          visible="true">
           <a-text value="hide" align="center" color="black" width="1"></a-text>
         </a-plane>
 
         <!-- Compass -->
-        <a-circle id="compass" color="white"  radius="0.12"  position="0.1 0.7 0" clickable>
+        <a-circle id="compass" color="white" radius="0.12" position="0.1 0.7 0" clickable>
           <a-image src="#compass_pic" width="0.15" height="0.15" geometry="primitive: plane"
             material="side: double;"></a-image>
           <!-- <a-text value="Compass" align="center" color="black" width="1"></a-text> -->
@@ -92,7 +93,8 @@
 
         <!-- Measuring tapes -->
         <a-circle id="measuring_tapes" color="white" radius="0.12" position="0.4 0.7 0" clickable>
-          <!-- <a-text value="Measuring tapes" align="center" color="black" width="1"></a-text> -->
+          <a-image src="#measuring_tapes" width="0.15" height="0.15" geometry="primitive: plane"
+            material="side: double;"></a-image>
         </a-circle>
 
         <!-- Lightbulb -->
@@ -192,8 +194,9 @@
       var clickablePoint = document.getElementById('clickablePoint');
       clickablePoint.setAttribute('visible', 'true');
 
-      // var info_message = document.getElementById('info_hammer');
-      // info_message.setAttribute('visible', 'true');
+      var hammer_button = document.getElementById('hammer');
+      hammer_button.setAttribute('color', 'black');
+
 
       // Get the clickable point entity
       var clickablePoint = document.getElementById('clickablePoint');
