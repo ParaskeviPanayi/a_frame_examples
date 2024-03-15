@@ -12,9 +12,6 @@
 </head>
 
 <body>
-
-
-
   <a-scene>
     <a-assets>
       <img id="forest" src="materials/0.jpg">
@@ -24,6 +21,7 @@
       <img id="lightbulb_pic" src="materials/idea_11995541.png">
       <img id="compass_pic" src="materials/compass.png">
       <img id="measuring_tapes" src="materials/measuring-tape_1172534.png">
+      <img id="hide_btn" src="materials/cross_8930404.png">
     </a-assets>
 
     <!-- 360-degree images for background -->
@@ -31,7 +29,7 @@
     <a-sky id="background-image" src="materials/0.jpg" rotation="0 0 0"></a-sky>
 
     <!-- Entity representing the clickable point -->
-    <a-sphere id="clickablePoint" position="1 2 -2" radius="0.8" color="#000000" opacity="0.1" visible="false">
+    <a-sphere id="clickablePoint" position="1 2 -2" radius="0.4" color="#000000" opacity="0.1" visible="false">
       <a-animation></a-animation>
     </a-sphere>
 
@@ -43,16 +41,16 @@
         <!------------------------Tools--------------------->
 
         <!-- Magnifying glass -->
-        <a-circle id="magnifying-glass" position="0 0 -5" radius="0.5" material="shader: flat; transparent: true; "
+        <a-circle id="magnifying-glass" position="0 0 0" radius="0.5" material="shader: flat; transparent: true; "
           visible="false"></a-circle>
 
         <!-- Hammer -->
-        <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="hammer_tool" visible="false">
+        <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 0" id="hammer_tool" visible="false">
           <a-image src="#hammer_pic" width="0.5" height="0.5" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-entity>
 
-        <!--  -->
+        <!-- Compass -->
         <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" id="compass_tool" visible="false">
           <a-image src="#compass_pic" width="0.5" height="0.5" geometry="primitive: plane"
             material="side: double;"></a-image>
@@ -65,11 +63,13 @@
           <a-image src="#magnifying_glass" width="0.15" height="0.15" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-circle>
-
+        
+        <!-- hide Magnifying Glass  -->
         <a-entity id="zoom_controls" visible="false">
-          <a-plane id="hide_button" color="white" width="0.4" height="0.1" depth="0.1" position="-1 0.48 0" clickable>
-            <a-text value="hide" color="black" width="1"></a-text>
-          </a-plane>
+          <a-circle id="hide_button" radius="0.01"  position="-0.5 0.5 0" clickable>
+            <a-image src="#hide_btn" width="0.1" height="0.1" geometry="primitive: plane"
+            material="side: double;"></a-image>
+          </a-circle>
         </a-entity>
 
         <!-- Hammer -->
@@ -79,10 +79,12 @@
             material="side: double;"></a-image>
         </a-circle>
 
-        <a-plane id="hide_hammer" color="white" width="0.5" height="0.1" depth="0.1" position="-0.2 0.5 0" clickable
-          visible="true">
-          <a-text value="hide" align="center" color="black" width="1"></a-text>
-        </a-plane>
+        <!-- hide Hammer -->
+        <a-circle id="hide_hammer" radius="0.01" color="white"  position="-0.2 0.5 0" clickable
+          visible="false">
+          <a-image src="#hide_btn" width="0.1" height="0.1" geometry="primitive: plane"
+            material="side: double;"></a-image>
+        </a-circle>
 
         <!-- Compass -->
         <a-circle id="compass" color="white" radius="0.12" position="0.1 0.7 0" clickable>
@@ -92,7 +94,7 @@
         </a-circle>
 
         <!-- Measuring tapes -->
-        <a-circle id="measuring_tapes" color="white" radius="0.12" position="0.4 0.7 0" clickable>
+        <a-circle id="measuring_tapes_btn" color="white" radius="0.12" position="0.4 0.7 0" clickable>
           <a-image src="#measuring_tapes" width="0.15" height="0.15" geometry="primitive: plane"
             material="side: double;"></a-image>
         </a-circle>
@@ -107,10 +109,7 @@
             color="black" width="1" background=""></a-text></a-plane>
 
       </a-entity>
-
-
     </a-camera>
-
     <a-entity cursor="rayOrigin: mouse"></a-entity>
 
 
@@ -120,7 +119,7 @@
 
   <script>
 
-    // Define the show_magnifying_glass function
+    //Show magnifying glass and options
     function show_magnifying_glass() {
       var magn_option = document.getElementById('zoom_controls');
       magn_option.setAttribute('visible', 'true');
@@ -141,6 +140,11 @@
 
       var magnifyingGlass = document.getElementById('magnifying-glass');
       magnifyingGlass.setAttribute('visible', 'false');
+
+      //change color of button
+      var magnifyingGlass = document.getElementById('Mag_glass_button');
+      magnifyingGlass.setAttribute('color', 'white');
+
     }
 
     // let scale = 1;
@@ -171,16 +175,7 @@
       //change color of button 
       var compass = document.getElementById('compass');
       compass.setAttribute('color', 'black');
-
     }
-
-    //-------------Keyboard shortcuts--------------------
-    //Reset zoom : alt and 0
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey && event.key === '0') {
-        hide_magnifying_glass();
-      }
-    })
 
     //Show hammer and clikable points 
     function show_hammer() {
@@ -196,7 +191,6 @@
 
       var hammer_button = document.getElementById('hammer');
       hammer_button.setAttribute('color', 'black');
-
 
       // Get the clickable point entity
       var clickablePoint = document.getElementById('clickablePoint');
@@ -229,21 +223,35 @@
       var clickablePoint = document.getElementById('clickablePoint');
       clickablePoint.setAttribute('visible', 'false');
 
-      //show light lightbulb
-      // var lightbulb = document.getElementById('lightbulb');
-      // lightbulb.setAttribute('visible', 'false');
-
       var clickablePoint = document.getElementById('hide_hammer');
       clickablePoint.setAttribute('visible', 'false');
+
+      var hammer_button = document.getElementById('hammer');
+      hammer_button.setAttribute('color', 'white');
     }
+
+    //Show measuring tapes
+    function show_measuring_tapes() {
+      //change color of button 
+      var measuring_tapes = document.getElementById('measuring_tapes_btn');
+      measuring_tapes.setAttribute('color', 'black');
+      // console.log("Measuring Tapes");
+    }
+
+    //-------------Keyboard shortcuts--------------------
+    //Reset zoom : alt and 0
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey && event.key === '0') {
+        hide_magnifying_glass();
+      }
+    })
 
     AFRAME.registerComponent('clickable', {
       init: function () {
 
-        var button = this.el; // Reference to the box element
+        var button = this.el; // Reference to the buttons
         button.addEventListener('click', function () {
-          // console.log('Button Clicked!');
-
+        
           if (button.id === "Mag_glass_button") {
             show_magnifying_glass();
             console.log("TTTTTTTTTTTT");
@@ -295,6 +303,9 @@
           }
           else if (button.id === "compass") {
             show_compass();
+          }
+          else if (button.id === "measuring_tapes_btn") {
+            show_measuring_tapes();
           }
         });
       }
